@@ -96,10 +96,10 @@ class TemplateSkill(CommonPlaySkill):
 
 
         def stop(self):
-        if self.process and self.process.poll() is None:
-            self.speak_dialog('singing.stop')
-            self.process.terminate()
-            self.process.wait()
+            if self.process and self.process.poll() is None:
+                print("ngung hat")
+                self.process.terminate()
+                self.process.wait()
 
 def create_skill():
     return TemplateSkill()
