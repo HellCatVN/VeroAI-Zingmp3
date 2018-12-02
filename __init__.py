@@ -84,7 +84,7 @@ class TemplateSkill(MycroftSkill):
         # realURL = realURLdata.headers['Location']
         # print(realURL)
         # self.audioservice.play(realURL) 
-        path = self.play_list[0]
+        path = 'https://blog.hellcatvn.com/VeroAI-Zingmp3/Seasons.mp3'
         try:
             self.audioservice.play(path)
         except Exception as e:
