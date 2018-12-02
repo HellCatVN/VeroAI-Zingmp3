@@ -54,7 +54,7 @@ class TemplateSkill(CommonPlaySkill):
         self.count = 0
 
     def initialize(self):
-        self.audioservice = AudioService(self.emitter)
+        self.audioservice = AudioService(self.bus)
 
     @intent_handler(IntentBuilder("").require("Play").require("Zingmp3"))
     def handle_hello_world_intent(self, message):
