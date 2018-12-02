@@ -68,27 +68,25 @@ class TemplateSkill(MycroftSkill):
     @intent_handler(IntentBuilder("").require("Play").require("Zingmp3"))
     def handle_play_zing_mp3(self, message):
         print("BBC")
-        # key_word = "Yêu 5"
-        # resp = requests.get('http://ac.mp3.zing.vn/complete/desktop?type=song&query='+urllib.parse.quote(key_word))
-        # resultJson = json.dumps(resp.json())
-        # obj = json.loads(resultJson)
-        # songID = obj["data"][1]['song'][0]['id']
-        # songUrl= "https://mp3.zing.vn/bai-hat/"+songID+".html"
-        # resp = requests.get(songUrl)
-        # key = re.findall('data-xml="\/media\/get-source\?type=audio&key=([a-zA-Z0-9]{20,35})', resp.text)
-        # songApiUrl = "https://mp3.zing.vn/xhr/media/get-source?type=audio&key="+key[0]
-        # resp = requests.get(songApiUrl)
-        # resultJson = json.dumps(resp.json())
-        # obj = json.loads(resultJson)
-        # mp3Source = "https:"+obj["data"]["source"]["128"]
-        # realURLdata = requests.get(mp3Source,allow_redirects=False)
-        # realURL = realURLdata.headers['Location']
-        # print(realURL)
-        # self.audioservice.play(realURL) 
-        path = 'https://blog.hellcatvn.com/VeroAI-Zingmp3/Seasons.mp3'
-        self.process = play_mp3(path)
+        key_word = "Yêu 5"
+        resp = requests.get('http://ac.mp3.zing.vn/complete/desktop?type=song&query='+urllib.parse.quote(key_word))
+        resultJson = json.dumps(resp.json())
+        obj = json.loads(resultJson)
+        songID = obj["data"][1]['song'][0]['id']
+        songUrl= "https://mp3.zing.vn/bai-hat/"+songID+".html"
+        resp = requests.get(songUrl)
+        key = re.findall('data-xml="\/media\/get-source\?type=audio&key=([a-zA-Z0-9]{20,35})', resp.text)
+        songApiUrl = "https://mp3.zing.vn/xhr/media/get-source?type=audio&key="+key[0]
+        resp = requests.get(songApiUrl)
+        resultJson = json.dumps(resp.json())
+        obj = json.loads(resultJson)
+        mp3Source = "https:"+obj["data"]["source"]["128"]
+        realURLdata = requests.get(mp3Source,allow_redirects=False)
+        realURL = realURLdata.headers['Location']
+        print(realURL)
+        self.process = play_mp3(realURL)
         try:
-            self.audioservice.play(path)
+            self.audioservice.play(realURL)
         except Exception as e:
             self.log.error("Error: {0}".format(e))
 
