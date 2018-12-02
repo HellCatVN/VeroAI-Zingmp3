@@ -53,6 +53,9 @@ class TemplateSkill(CommonPlaySkill):
         # Initialize working variables used within the skill.
         self.count = 0
 
+    def initialize(self):
+        self.audioservice = AudioService(self.emitter)
+
     @intent_handler(IntentBuilder("").require("Play").require("Zingmp3"))
     def handle_hello_world_intent(self, message):
         print("BBC")
