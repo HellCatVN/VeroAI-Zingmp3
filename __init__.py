@@ -86,7 +86,6 @@ class TemplateSkill(MycroftSkill):
         realURLdata = requests.get(mp3Source,allow_redirects=False)
         realURL = realURLdata.headers['Location']
         print(realURL)
-        self.audioservice.play(realURL) 
         path = realURL
         try:
             print("Play Song")
