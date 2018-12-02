@@ -40,11 +40,11 @@ class TemplateSkill(MycroftSkill):
 
     def initialize(self):
         self.audioservice = AudioService(self.bus)
-
-    launch_intent = IntentBuilder("play zing mp3").require("Play").require("Zingmp3").build()
-    self.register_intent(launch_intent, self.handle_play_zing_mp3)
-    search_intent = IntentBuilder("search song").require("Songkeyword").build()
-    self.register_intent(search_intent, self.handle_search_song)
+        launch_intent = IntentBuilder("play zing mp3").require("Play").require("Zingmp3").build()
+        self.register_intent(launch_intent, self.handle_play_zing_mp3)
+        search_intent = IntentBuilder("search song").require("Songkeyword").build()
+        self.register_intent(search_intent, self.handle_search_song)
+        
     def trigger_seach():
         search_intent = IntentBuilder("search song").require("Songkeyword").build()
         self.register_intent(search_intent, self.handle_search_song)
