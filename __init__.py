@@ -82,7 +82,7 @@ class TemplateSkill(MycroftSkill):
         realURLdata = requests.get(mp3Source,allow_redirects=False)
         realURL = realURLdata.headers['Location']
         print(realURL)
-        resp = requests.get(realURL, headers=headers, stream=True, timeout=TIMEOUT)
+        resp = requests.get(realURL, stream=True)
         # if resp.status_code == 403:
         #     retry_times = RETRY
         #     print("Access Denied when retrieve %s.\n" % medium_url)
