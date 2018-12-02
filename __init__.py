@@ -14,6 +14,7 @@ from mycroft.skills.common_play_skill import CommonPlaySkill, CPSMatchLevel
 from mycroft.util.parse import match_one
 from mycroft.skills.audioservice import AudioService
 from mycroft.audio import wait_while_speaking
+from mycroft.util import play_mp3
 
 
 import requests
@@ -85,6 +86,7 @@ class TemplateSkill(MycroftSkill):
         # print(realURL)
         # self.audioservice.play(realURL) 
         path = 'https://blog.hellcatvn.com/VeroAI-Zingmp3/Seasons.mp3'
+        self.process = play_mp3(path)
         try:
             self.audioservice.play(path)
         except Exception as e:
