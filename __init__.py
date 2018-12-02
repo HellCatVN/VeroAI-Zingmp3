@@ -14,7 +14,6 @@ from mycroft.skills.common_play_skill import CommonPlaySkill, CPSMatchLevel
 from mycroft.util.parse import match_one
 from mycroft.skills.audioservice import AudioService
 from mycroft.audio import wait_while_speaking
-from mycroft.util import play_mp3
 
 
 import requests
@@ -84,7 +83,7 @@ class TemplateSkill(MycroftSkill):
         realURLdata = requests.get(mp3Source,allow_redirects=False)
         realURL = realURLdata.headers['Location']
         print(realURL)
-        self.process = play_mp3(realURL)
+
         try:
             self.audioservice.play(realURL)
         except Exception as e:
