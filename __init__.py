@@ -66,7 +66,6 @@ class TemplateSkill(MycroftSkill):
 
     @intent_handler(IntentBuilder("").require("Play").require("Zingmp3"))
     def handle_play_zing_mp3(self, message):
-        print("BBC")
         key_word = "Yêu 5"
         resp = requests.get('http://ac.mp3.zing.vn/complete/desktop?type=song&query='+urllib.parse.quote(key_word))
         resultJson = json.dumps(resp.json())
@@ -83,9 +82,16 @@ class TemplateSkill(MycroftSkill):
         realURLdata = requests.get(mp3Source,allow_redirects=False)
         realURL = realURLdata.headers['Location']
         print(realURL)
-
+        resp = requests.get(realURL, headers=headers, stream=True, timeout=TIMEOUT)
+        # if resp.status_code == 403:
+        #     retry_times = RETRY
+        #     print("Access Denied when retrieve %s.\n" % medium_url)
+        #     raise Exception("Access Denied")
+        # with open(file_path, 'wb') as fh:
+        #     for chunk in resp.iter_content(chunk_size=1024):
+        #         fh.write(chunk)       
         try:
-            self.audioservice.play(realURL)
+            self.audioservice.play(resp)
         except Exception as e:
             self.log.error("Error: {0}".format(e))
 
