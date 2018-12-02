@@ -42,17 +42,13 @@ class TemplateSkill(MycroftSkill):
         self.audioservice = AudioService(self.bus)
         launch_intent = IntentBuilder("play zing mp3").require("Play").require("Zingmp3").build()
         self.register_intent(launch_intent, self.handle_play_zing_mp3)
-        search_intent = IntentBuilder("search song").require("Songkeyword").build()
-        self.register_intent(search_intent, self.handle_search_song)
-
-    def trigger_seach():
-        search_intent = IntentBuilder("search song").require("Songkeyword").build()
-        self.register_intent(search_intent, self.handle_search_song)
 
     def handle_play_zing_mp3(self, message):
         self.speak('Here am I,Which song you want to play',expect_response=True)
-        self.trigger_search()
+        search_intent = IntentBuilder("search song").require("Songkeyword").build()
+        self.register_intent(search_intent, self.handle_search_song)
     def handle_search_song(self ,message):
+        self.speak("ABC")
         print(message)
         # key_word = "Yêu 5"
         # resp = requests.get('http://ac.mp3.zing.vn/complete/desktop?type=song&query='+urllib.parse.quote(key_word))
