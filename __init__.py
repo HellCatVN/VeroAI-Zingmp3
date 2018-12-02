@@ -63,10 +63,6 @@ class TemplateSkill(MycroftSkill):
 
     def initialize(self):
         self.audioservice = AudioService(self.bus)
-        self.add_event("mycroft.sing", self.sing, False)
-
-    # def sing(self, message):
-    #     self.process = play_mp3(self.play_list[3])
 
     @intent_handler(IntentBuilder("").require("Play").require("Zingmp3"))
     def handle_play_zing_mp3(self, message):
