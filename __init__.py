@@ -27,7 +27,7 @@ from os.path import dirname, join
 # from the MycroftSkill class.  You extend this class as shown below.
 
 # TODO: Change "Template" to a unique name for your skill
-class TemplateSkill(CommonPlaySkill):
+class TemplateSkill(MycroftSkill):
     
     # track_dict = {
     #     'Be Your EveryThing': 'https://blog.hellcatvn.com/mp3/Be%20Your%20Everything',
