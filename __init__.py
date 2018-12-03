@@ -14,15 +14,13 @@ from mycroft.skills.common_play_skill import CommonPlaySkill, CPSMatchLevel
 from mycroft.util.parse import match_one
 from mycroft.skills.audioservice import AudioService
 from mycroft.audio import wait_while_speaking
-from adapt.engine import IntentDeterminationEngine
-
-engine = IntentDeterminationEngine()
 
 import requests
 import json
 import urllib
 import re
 import random
+import vlc
 from os.path import dirname, join
 
 class TemplateSkill(MycroftSkill):
@@ -62,13 +60,13 @@ class TemplateSkill(MycroftSkill):
         mp3Source = "https:"+obj["data"]["source"]["128"]
         realURLdata = requests.get(mp3Source,allow_redirects=False)
         realURL = realURLdata.headers['Location']
-        resp = requests.get(realURL, stream=True)
-        file_path = join(dirname(__file__), "song.mp3")
-        with open(file_path, 'wb') as fh:
-            for chunk in resp.iter_content(chunk_size=1024):
-                fh.write(chunk)
+        # resp = requests.get(realURL, stream=True)
+        # file_path = join(dirname(__file__), "song.mp3")
+        # with open(file_path, 'wb') as fh:
+        #     for chunk in resp.iter_content(chunk_size=1024):
+        #         fh.write(chunk)
         try:
-            self.audioservice.play(file_path)
+            self.audioservice.play(realURL)
         except Exception as e:
             self.log.error("Error: {0}".format(e))
 
