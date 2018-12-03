@@ -44,8 +44,8 @@ class TemplateSkill(MycroftSkill):
     def handle_play_zing_mp3(self, message):
         self.speak('Here am I,Which song you want to play',expect_response=True)
     def converse(self, utterances, lang="en-us"):
-        if(utterances[0] == stop):
-            self.audioservice.stop
+        if(utterances[0] == "stop"):
+            self.audioservice.stop()
         else:
             print("Seaching Song:"+utterances[0]+"...")
             key_word = utterances[0]
