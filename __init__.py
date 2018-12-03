@@ -44,34 +44,32 @@ class TemplateSkill(MycroftSkill):
     def handle_play_zing_mp3(self, message):
         self.speak('Here am I,Which song you want to play',expect_response=True)
     def converse(self, utterances, lang="en-us"):
-        if(utterances[0] == "stop"):
-            self.audioservice.stop()
-            if self.process and self.process.poll() is None:
-                print("ngung hat")
-                self.process.terminate()
-                self.process.wait()          
-        else:
-            print("Seaching Song:"+utterances[0]+"...")
-            key_word = utterances[0]
-            resp = requests.get('http://ac.mp3.zing.vn/complete/desktop?type=song&query='+urllib.parse.quote(key_word))
-            resultJson = json.dumps(resp.json())
-            obj = json.loads(resultJson)
-            songID = obj["data"][1]['song'][0]['id']
-            songUrl= "https://mp3.zing.vn/bai-hat/"+songID+".html"
-            resp = requests.get(songUrl)
-            key = re.findall('data-xml="\/media\/get-source\?type=audio&key=([a-zA-Z0-9]{20,35})', resp.text)
-            songApiUrl = "https://mp3.zing.vn/xhr/media/get-source?type=audio&key="+key[0]
-            resp = requests.get(songApiUrl)
-            resultJson = json.dumps(resp.json())
-            obj = json.loads(resultJson)
-            mp3Source = "https:"+obj["data"]["source"]["128"]
-            realURLdata = requests.get(mp3Source,allow_redirects=False)
-            realURL = realURLdata.headers['Location']
-            print(realURL)
-            try:
-                self.audioservice.play(realURL)
-            except Exception as e:
-                self.log.error("Error: {0}".format(e))
+        print("Seaching Song:"+utterances[0]+"...")
+        key_word = utterances[0]
+        resp = requests.get('http://ac.mp3.zing.vn/complete/desktop?type=song&query='+urllib.parse.quote(key_word))
+        resultJson = json.dumps(resp.json())
+        obj = json.loads(resultJson)
+        songID = obj["data"][1]['song'][0]['id']
+        songUrl= "https://mp3.zing.vn/bai-hat/"+songID+".html"
+        resp = requests.get(songUrl)
+        key = re.findall('data-xml="\/media\/get-source\?type=audio&key=([a-zA-Z0-9]{20,35})', resp.text)
+        songApiUrl = "https://mp3.zing.vn/xhr/media/get-source?type=audio&key="+key[0]
+        resp = requests.get(songApiUrl)
+        resultJson = json.dumps(resp.json())
+        obj = json.loads(resultJson)
+        mp3Source = "https:"+obj["data"]["source"]["128"]
+        realURLdata = requests.get(mp3Source,allow_redirects=False)
+        realURL = realURLdata.headers['Location']
+        # print()
+        # # resp = requests.get(realURL, stream=True)
+        # # file_path = join(dirname(__file__), "song.mp3")
+        # # with open(file_path, 'wb') as fh:
+        # #     for chunk in resp.iter_content(chunk_size=1024):
+        # #         fh.write(chunk)
+        try:
+            self.audioservice.play(realURL)
+        except Exception as e:
+            self.log.error("Error: {0}".format(e))
 
 
         def stop(self):
