@@ -61,13 +61,13 @@ class TemplateSkill(MycroftSkill):
         realURLdata = requests.get(mp3Source,allow_redirects=False)
         realURL = realURLdata.headers['Location']
         print(realURL)
-        # resp = requests.get(realURL, stream=True)
-        # file_path = join(dirname(__file__), "song.mp3")
-        # with open(file_path, 'wb') as fh:
-        #     for chunk in resp.iter_content(chunk_size=1024):
-        #         fh.write(chunk)
+        resp = requests.get(realURL, stream=True)
+        file_path = join(dirname(__file__), "song.mp3")
+        with open(file_path, 'wb') as fh:
+            for chunk in resp.iter_content(chunk_size=1024):
+                fh.write(chunk)
         try:
-            self.audioservice.play(realURL)
+            self.audioservice.play(file_path)
         except Exception as e:
             self.log.error("Error: {0}".format(e))
 
