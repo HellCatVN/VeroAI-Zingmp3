@@ -44,7 +44,9 @@ class TemplateSkill(MycroftSkill):
     def handle_play_zing_mp3(self, message):
         self.speak('Here am I,Which song you want to play',expect_response=True)
     def converse(self, utterances, lang="en-us"):
-        if(utterances[0] != stop):
+        if(utterances[0] == stop):
+            self.audioservice.stop
+        else:
             print("Seaching Song:"+utterances[0]+"...")
             key_word = utterances[0]
             resp = requests.get('http://ac.mp3.zing.vn/complete/desktop?type=song&query='+urllib.parse.quote(key_word))
@@ -62,13 +64,17 @@ class TemplateSkill(MycroftSkill):
             realURLdata = requests.get(mp3Source,allow_redirects=False)
             realURL = realURLdata.headers['Location']
             print(realURL)
-        self.audioservice.stop()
-
         try:
             self.audioservice.play(realURL)
         except Exception as e:
             self.log.error("Error: {0}".format(e))
 
+
+        def stop(self):
+            if self.process and self.process.poll() is None:
+                print("ngung hat")
+                self.process.terminate()
+                self.process.wait()
 
 def create_skill():
     return TemplateSkill()
