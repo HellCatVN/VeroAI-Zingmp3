@@ -46,6 +46,10 @@ class TemplateSkill(MycroftSkill):
     def converse(self, utterances, lang="en-us"):
         if(utterances[0] == "stop"):
             self.audioservice.stop()
+            if self.process and self.process.poll() is None:
+                print("ngung hat")
+                self.process.terminate()
+                self.process.wait()          
         else:
             print("Seaching Song:"+utterances[0]+"...")
             key_word = utterances[0]
@@ -64,10 +68,10 @@ class TemplateSkill(MycroftSkill):
             realURLdata = requests.get(mp3Source,allow_redirects=False)
             realURL = realURLdata.headers['Location']
             print(realURL)
-        try:
-            self.audioservice.play(realURL)
-        except Exception as e:
-            self.log.error("Error: {0}".format(e))
+            try:
+                self.audioservice.play(realURL)
+            except Exception as e:
+                self.log.error("Error: {0}".format(e))
 
 
         def stop(self):
