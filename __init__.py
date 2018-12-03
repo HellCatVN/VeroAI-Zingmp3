@@ -60,6 +60,7 @@ class TemplateSkill(MycroftSkill):
         mp3Source = "https:"+obj["data"]["source"]["128"]
         realURLdata = requests.get(mp3Source,allow_redirects=False)
         realURL = realURLdata.headers['Location']
+        print(realURL)
         # resp = requests.get(realURL, stream=True)
         # file_path = join(dirname(__file__), "song.mp3")
         # with open(file_path, 'wb') as fh:

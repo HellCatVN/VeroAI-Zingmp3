@@ -5,3 +5,4 @@ json
 urllib
 re
 vlc
+click
