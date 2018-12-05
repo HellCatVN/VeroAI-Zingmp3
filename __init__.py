@@ -42,14 +42,16 @@ class TemplateSkill(MycroftSkill):
         self.register_intent(launch_intent, self.handle_play_zing_mp3)
 
     def handle_play_zing_mp3(self, message):
-        key_word = "Yêu"
+        key_word = "Yêu 5"
         resp = requests.get('http://ac.mp3.zing.vn/complete/desktop?type=song&query='+urllib.parse.quote(key_word))
         resultJson = json.dumps(resp.json())
         obj = json.loads(resultJson)
         songID = obj["data"][1]['song'][0]['id']
         songUrl= "https://mp3.zing.vn/bai-hat/"+songID+".html"
+        print(songUrl)
         resp = requests.get(songUrl)
         key = re.findall('data-xml="\/media\/get-source\?type=audio&key=([a-zA-Z0-9]{20,35})', resp.text)
+        print(key[0])
         songApiUrl = "https://mp3.zing.vn/xhr/media/get-source?type=audio&key="+key[0]
         resp = requests.get(songApiUrl)
         resultJson = json.dumps(resp.json())
