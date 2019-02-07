@@ -59,18 +59,22 @@ class TemplateSkill(MycroftSkill):
         mp3Source = "https:"+obj["data"]["source"]["128"]
         realURLdata = requests.get(mp3Source,allow_redirects=False)
         realURL = realURLdata.headers['Location']
-        print(realURL)
-        # print()
-        # # resp = requests.get(realURL, stream=True)
-        # # file_path = join(dirname(__file__), "song.mp3")
-        # # with open(file_path, 'wb') as fh:
-        # #     for chunk in resp.iter_content(chunk_size=1024):
-        # #         fh.write(chunk)
+        resp = requests.get(realURL, stream=True)
+        file_path = join(dirname(__file__), "song.mp3")
+        with open(file_path, 'wb') as fh:
+            for chunk in resp.iter_content(chunk_size=1024):
+                fh.write(chunk)
         try:
-            self.audioservice.play(realURL)
+            self.audioservice.play(file_path)
         except Exception as e:
             self.log.error("Error: {0}".format(e))
 
+
+        def stop(self):
+            if self.process and self.process.poll() is None:
+                print("ngung hat")
+                self.process.terminate()
+                self.process.wait()
 
 def create_skill():
     return TemplateSkill()
