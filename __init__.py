@@ -42,7 +42,10 @@ class TemplateSkill(MycroftSkill):
         self.register_intent(launch_intent, self.handle_play_zing_mp3)
 
     def handle_play_zing_mp3(self, message):
-        key_word = "Yêu 5"
+        self.speak('Here am I,Which song you want to play',expect_response=True)
+    def converse(self, utterances, lang="en-us"):
+        print("Seaching Song:"+utterances[0]+"...")
+        key_word = utterances[0]
         resp = requests.get('http://ac.mp3.zing.vn/complete/desktop?type=song&query='+urllib.parse.quote(key_word))
         resultJson = json.dumps(resp.json())
         obj = json.loads(resultJson)
